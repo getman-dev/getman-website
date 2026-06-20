@@ -41,9 +41,9 @@ const snippet = `<!-- 1. Add a container -->
           id="qi-copy-btn"
           data-code={snippet}
           class="absolute right-3 top-3 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors"
-          style="color: #a8a29e; background: rgba(255,255,255,0.05);"
-          onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='white'"
-          onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#a8a29e'"
+          style="color: #818cf8; background: rgba(99,102,241,0.08);"
+          onmouseover="this.style.background='rgba(99,102,241,0.18)';this.style.color='#c7d2fe'"
+          onmouseout="this.style.background='rgba(99,102,241,0.08)';this.style.color='#818cf8'"
           aria-label="Copy code"
         >
           <svg id="qi-copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -60,18 +60,18 @@ const snippet = `<!-- 1. Add a container -->
         <pre class="overflow-x-auto p-5 pr-20 text-sm leading-relaxed" style="font-family: var(--font-mono);"><code id="qi-code">{snippet.split('\n').map((line, i) => {
   // colour-code the three comment lines as muted, rest as code
   if (line.startsWith('<!--')) {
-    return <span style="color: #a8a29e;">{line + '\n'}</span>;
+    return <span style="color: #6366f1;">{line + '\n'}</span>;
   }
   if (line.includes('<script') || line.includes('<\\/script>')) {
-    return <span style="color: #86efac;">{line + '\n'}</span>;
+    return <span style="color: #a5b4fc;">{line + '\n'}</span>;
   }
   if (line.includes('ApiExplorer')) {
-    return <span style="color: #93c5fd;">{line + '\n'}</span>;
+    return <span style="color: #c4b5fd;">{line + '\n'}</span>;
   }
   if (line.trim() === '') {
     return '\n';
   }
-  return <span style="color: #d6d3d1;">{line + '\n'}</span>;
+  return <span style="color: #e2e8f0;">{line + '\n'}</span>;
 })}</code></pre>
       </div>
     </div>
