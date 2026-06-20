@@ -4,6 +4,7 @@ import IconShield from './icons/IconShield.astro';
 import IconGitHub from './icons/IconGitHub.astro';
 import IconStar from './icons/IconStar.astro';
 import IconTwitterX from './icons/IconTwitterX.astro';
+import IconTag from './icons/IconTag.astro';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -70,77 +71,39 @@ const currentYear = new Date().getFullYear();
           href={`${githubUrl}/releases`}
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-1.5 text-sm w-fit"
-          style="color: var(--color-text-muted);"
-          onmouseover="this.style.color='var(--color-text-secondary)'"
-          onmouseout="this.style.color='var(--color-text-muted)'"
+          class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
+          style="color: var(--color-text-secondary);"
+          onmouseover="this.style.color='var(--color-text-primary)'"
+          onmouseout="this.style.color='var(--color-text-secondary)'"
         >
-          <span
-            class="rounded-full border px-2 py-0.5 text-xs font-mono font-medium"
-            style="background-color: var(--color-badge-bg); color: var(--color-badge-text); border-color: var(--color-badge-border);"
-          >
-            Releases
-          </span>
+          <IconTag size={14} />
+          Releases
         </a>
-
-        <div class="mt-4 flex flex-col gap-2 border-t pt-4" style="border-color: var(--color-border);">
-          <a
-            href={githubStarsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
-            style="color: var(--color-text-secondary);"
-            onmouseover="this.style.color='var(--color-text-primary)'"
-            onmouseout="this.style.color='var(--color-text-secondary)'"
-          >
-            <IconStar size={13} style="color: var(--color-badge-text);" />
-            Star on GitHub
-          </a>
-          <a
-            href={buyMeACoffeeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
-            style="color: var(--color-text-secondary);"
-            onmouseover="this.style.color='var(--color-text-primary)'"
-            onmouseout="this.style.color='var(--color-text-secondary)'"
-          >
-            ☕ Buy me a coffee
-          </a>
-          <a
-            href={xUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
-            style="color: var(--color-text-secondary);"
-            onmouseover="this.style.color='var(--color-text-primary)'"
-            onmouseout="this.style.color='var(--color-text-secondary)'"
-          >
-            <IconTwitterX size={13} />
-            Follow on X
-          </a>
-        </div>
+        <a
+          href={buyMeACoffeeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
+          style="color: var(--color-text-secondary);"
+          onmouseover="this.style.color='var(--color-text-primary)'"
+          onmouseout="this.style.color='var(--color-text-secondary)'"
+        >
+          ☕ Buy me a coffee
+        </a>
+        <a
+          href={xUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
+          style="color: var(--color-text-secondary);"
+          onmouseover="this.style.color='var(--color-text-primary)'"
+          onmouseout="this.style.color='var(--color-text-secondary)'"
+        >
+          <IconTwitterX size={13} />
+          Follow on X
+        </a>
       </div>
 
-    </div>
-
-    <!-- Bottom bar -->
-    <div
-      class="mt-10 flex flex-col items-center justify-between gap-2 border-t pt-6 text-xs sm:flex-row"
-      style="border-color: var(--color-border); color: var(--color-text-muted);"
-    >
-      <span>© {currentYear} GetMan — MIT License</span>
-      <a
-        href={githubUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="transition-colors"
-        style="color: var(--color-text-muted);"
-        onmouseover="this.style.color='var(--color-text-secondary)'"
-        onmouseout="this.style.color='var(--color-text-muted)'"
-      >
-        GitHub ↗
-      </a>
     </div>
   </div>
 </footer>
