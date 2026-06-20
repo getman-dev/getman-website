@@ -1,49 +1,63 @@
-# Starlight Starter Kit: Basics
+# getman-website
 
-[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
+Marketing and documentation site for [GetMan](https://github.com/getman-dev/getman-ui) — a zero-dependency, embeddable OpenAPI explorer.
+
+**Live site:** [getman.dev](https://getman.dev) &nbsp;·&nbsp; **Product repo:** [getman-dev/getman-ui](https://github.com/getman-dev/getman-ui)
+
+---
+
+## Stack
+
+- [Astro 6](https://astro.build) — static site generator
+- [Tailwind CSS 4](https://tailwindcss.com) — utility-first styling via the Vite plugin
+- [TypeScript](https://www.typescriptlang.org)
+- Served by nginx inside Docker
+
+## Project structure
 
 ```
-npm create astro@latest -- --template starlight
+src/
+├── components/        # Reusable Astro components
+│   └── icons/         # SVG icon components (Feather-style)
+├── layouts/           # Base page layout
+├── pages/             # File-based routes
+│   ├── index.astro    # Homepage
+│   ├── examples.astro # Live examples gallery
+│   ├── explorer.astro # Full-screen API explorer embed
+│   └── docs.astro     # QuickStart & API reference
+├── data/              # Static data (example specs list)
+├── styles/            # Global CSS & design tokens
+└── config.ts          # Site-wide URLs and constants
+public/                # Static assets (logo, favicon, OG image)
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Local development
 
-## 🚀 Project Structure
-
-Inside of your Astro + Starlight project, you'll see the following folders and files:
-
-```
-.
-├── public/
-├── src/
-│   ├── assets/
-│   ├── content/
-│   │   └── docs/
-│   └── content.config.ts
-├── astro.config.mjs
-├── package.json
-└── tsconfig.json
+```bash
+npm install
+npm run dev      # → http://localhost:4321
 ```
 
-Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+```bash
+npm run build    # Production build → ./dist/
+npm run preview  # Preview the build locally
+```
 
-Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+## Deployment
 
-Static assets, like favicons, can be placed in the `public/` directory.
+The site ships as a static build served by nginx. A `Dockerfile` and `docker-compose.yml` are included.
 
-## 🧞 Commands
+```bash
+# Build and run the container
+docker compose up --build
+```
 
-All commands are run from the root of the project, from a terminal:
+The nginx config (`nginx.conf`) enables `gzip_static` and sets a 1-year immutable cache on hashed assets.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Contributing
 
-## 👀 Want to learn more?
+Open an issue or pull request. For changes to the GetMan product itself (the embeddable explorer), see [getman-dev/getman-ui](https://github.com/getman-dev/getman-ui).
 
-Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+## License
+
+[MIT](./LICENSE) © GetMan
