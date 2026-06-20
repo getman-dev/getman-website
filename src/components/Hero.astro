@@ -1,6 +1,7 @@
 ---
 const cdnScript = `<script src="https://cdn.getman.dev/v1/getman.min.js"></script>`;
 import { githubUrl } from '../config';
+import SocialProofBar from './SocialProofBar.astro';
 ---
 
 <section
@@ -34,10 +35,13 @@ import { githubUrl } from '../config';
     </h1>
 
     <!-- Subheading -->
-    <p class="mb-8 text-lg leading-relaxed sm:text-xl" style="color: var(--color-text-secondary);">
+    <p class="mb-6 text-lg leading-relaxed sm:text-xl" style="color: var(--color-text-secondary);">
       Embeddable in any page with a single script tag.<br class="hidden sm:block" />
       No bloat, no vendor lock-in — just a clean, fast API explorer.
     </p>
+
+    <!-- Social proof -->
+    <SocialProofBar />
 
     <!-- CTAs -->
     <div class="mb-10 flex flex-col items-center justify-center gap-3 sm:flex-row">

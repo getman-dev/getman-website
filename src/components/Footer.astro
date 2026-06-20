@@ -1,5 +1,5 @@
 ---
-import { githubUrl } from '../config';
+import { githubUrl, githubStarsUrl, buyMeACoffeeUrl, xUrl } from '../config';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -82,6 +82,48 @@ const currentYear = new Date().getFullYear();
             Releases
           </span>
         </a>
+
+        <div class="mt-4 flex flex-col gap-2 border-t pt-4" style="border-color: var(--color-border);">
+          <a
+            href={githubStarsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
+            style="color: var(--color-text-secondary);"
+            onmouseover="this.style.color='var(--color-text-primary)'"
+            onmouseout="this.style.color='var(--color-text-secondary)'"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="color: var(--color-badge-text);">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+            Star on GitHub
+          </a>
+          <a
+            href={buyMeACoffeeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
+            style="color: var(--color-text-secondary);"
+            onmouseover="this.style.color='var(--color-text-primary)'"
+            onmouseout="this.style.color='var(--color-text-secondary)'"
+          >
+            ☕ Buy me a coffee
+          </a>
+          <a
+            href={xUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 text-sm font-medium transition-colors w-fit"
+            style="color: var(--color-text-secondary);"
+            onmouseover="this.style.color='var(--color-text-primary)'"
+            onmouseout="this.style.color='var(--color-text-secondary)'"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.732-8.835L2.25 2.25h6.838l4.26 5.636zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+            Follow on X
+          </a>
+        </div>
       </div>
 
     </div>
