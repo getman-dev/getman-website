@@ -23,8 +23,8 @@ import { githubUrl } from '../config';
           <span class="text-lg font-bold" style="color: var(--color-text-primary);">GetMan</span>
         </a>
 
-        <!-- Right: nav links + theme toggle + CTA -->
-        <nav class="flex items-center gap-1 sm:gap-2">
+        <!-- Desktop nav (hidden on mobile) -->
+        <nav class="hidden items-center gap-1 sm:flex sm:gap-2">
           <a
             href="/examples"
             class="rounded-lg px-3 py-2 text-sm font-medium transition-colors"
@@ -53,11 +53,9 @@ import { githubUrl } from '../config';
             onmouseout="this.style.color='var(--color-text-muted)';this.style.background=''"
             aria-label="Toggle dark mode"
           >
-            <!-- Sun (shown in dark mode) -->
             <svg id="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
               <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
             </svg>
-            <!-- Moon (shown in light mode) -->
             <svg id="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
             </svg>
@@ -78,6 +76,43 @@ import { githubUrl } from '../config';
             <span>GitHub</span>
           </a>
         </nav>
+
+        <!-- Mobile right: theme toggle + hamburger -->
+        <div class="flex items-center gap-1 sm:hidden">
+          <button
+            id="theme-toggle-mobile"
+            class="rounded-lg p-2 transition-colors"
+            style="color: var(--color-text-muted);"
+            aria-label="Toggle dark mode"
+          >
+            <svg id="icon-sun-mobile" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg id="icon-moon-mobile" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+
+          <button
+            id="mobile-menu-btn"
+            class="rounded-lg p-2 transition-colors"
+            style="color: var(--color-text-secondary);"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <!-- Hamburger icon -->
+            <svg id="hamburger-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <!-- Close icon -->
+            <svg id="close-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
       </>
     )}
 
@@ -132,7 +167,7 @@ import { githubUrl } from '../config';
 
           <button
             id="share-btn"
-            class="rounded-xl border-2 px-4 py-2 text-sm font-bold transition-transform"
+            class="rounded-xl border-2 px-3 py-2 text-sm font-bold transition-transform sm:px-4"
             style="border-color: var(--color-border); background: var(--color-surface); color: var(--color-text-secondary); box-shadow: 3px 3px 0 var(--color-border);"
             onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0 var(--color-border)'"
             onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0 var(--color-border)'"
@@ -144,6 +179,46 @@ import { githubUrl } from '../config';
     )}
 
   </div>
+
+  <!-- Mobile dropdown menu (default variant only) -->
+  {variant === 'default' && (
+    <div
+      id="mobile-menu"
+      class="hidden border-t px-6 pb-4 pt-2 sm:hidden"
+      style="background-color: var(--color-bg); border-color: var(--color-border);"
+    >
+      <nav class="flex flex-col gap-1">
+        <a
+          href="/examples"
+          class="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
+          style="color: var(--color-text-secondary);"
+        >
+          Examples
+        </a>
+        <a
+          href="/docs"
+          class="rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
+          style="color: var(--color-text-secondary);"
+        >
+          Docs
+        </a>
+        <div class="mt-2 pt-2" style="border-top: 1px solid var(--color-border);">
+          <a
+            href={githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-bold text-white transition-transform"
+            style="background-color: var(--color-accent); box-shadow: 3px 3px 0 var(--color-accent-shadow);"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </nav>
+    </div>
+  )}
 </header>
 
 <script>
@@ -155,30 +230,64 @@ import { githubUrl } from '../config';
     }, { passive: true });
   }
 
-  // ── Dark mode toggle ────────────────────────────────────────────────────
-  const toggleBtn = document.getElementById('theme-toggle');
-  const iconSun   = document.getElementById('icon-sun');
-  const iconMoon  = document.getElementById('icon-moon');
-
+  // ── Dark mode helpers ────────────────────────────────────────────────────
   function isDark() {
     const saved = localStorage.getItem('theme');
     if (saved) return saved === 'dark';
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
 
+  function applyTheme(next: string) {
+    localStorage.setItem('theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+    applyThemeIcons();
+  }
+
   function applyThemeIcons() {
     const dark = isDark();
-    if (iconSun)  iconSun.style.display  = dark ? '' : 'none';
-    if (iconMoon) iconMoon.style.display = dark ? 'none' : '';
+    const pairs = [
+      ['icon-sun', 'icon-moon'],
+      ['icon-sun-mobile', 'icon-moon-mobile'],
+    ];
+    for (const [sunId, moonId] of pairs) {
+      const sun  = document.getElementById(sunId);
+      const moon = document.getElementById(moonId);
+      if (sun)  sun.style.display  = dark ? '' : 'none';
+      if (moon) moon.style.display = dark ? 'none' : '';
+    }
   }
 
   applyThemeIcons();
 
-  toggleBtn?.addEventListener('click', () => {
-    const next = isDark() ? 'light' : 'dark';
-    localStorage.setItem('theme', next);
-    document.documentElement.setAttribute('data-theme', next);
-    applyThemeIcons();
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    applyTheme(isDark() ? 'light' : 'dark');
+  });
+
+  document.getElementById('theme-toggle-mobile')?.addEventListener('click', () => {
+    applyTheme(isDark() ? 'light' : 'dark');
+  });
+
+  // ── Mobile menu toggle ───────────────────────────────────────────────────
+  const menuBtn       = document.getElementById('mobile-menu-btn');
+  const mobileMenu    = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+  const closeIcon     = document.getElementById('close-icon');
+
+  menuBtn?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.classList.toggle('hidden') === false;
+    if (hamburgerIcon) hamburgerIcon.style.display = isOpen ? 'none' : '';
+    if (closeIcon)     closeIcon.style.display     = isOpen ? '' : 'none';
+    menuBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Close mobile menu when a link is clicked
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      if (hamburgerIcon) hamburgerIcon.style.display = '';
+      if (closeIcon)     closeIcon.style.display     = 'none';
+      menuBtn?.setAttribute('aria-expanded', 'false');
+    });
   });
 
   // ── Share button ────────────────────────────────────────────────────────

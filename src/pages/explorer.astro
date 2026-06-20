@@ -2,19 +2,18 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopBar from '../components/TopBar.astro';
 
-const isEmbed = Astro.url.searchParams.has('embed');
 ---
 
 <BaseLayout
   title="Explorer — GetMan"
   description="Full-screen interactive OpenAPI explorer. Load any spec by URL."
 >
-  {!isEmbed && <TopBar slot="topbar" variant="explorer" />}
+  <TopBar slot="topbar" variant="explorer" />
 
-  <!-- Full-height explorer area -->
+  <!-- Full-height explorer area; height adjusted client-side when toolbar is hidden -->
   <div
     id="explorer-wrapper"
-    style={`height: ${isEmbed ? '100vh' : 'calc(100vh - 4rem)'};`}
+    style="height: calc(100vh - 4rem);"
   >
     <!-- Fallback: shown when no ?spec param is present -->
     <div
@@ -64,6 +63,15 @@ const isEmbed = Astro.url.searchParams.has('embed');
 </BaseLayout>
 
 <script>
+  // ── Hide toolbar when ?hideToolbar or ?embed is in the URL ───────────────
+  const _p = new URLSearchParams(window.location.search);
+  if (_p.has('hideToolbar') || _p.has('embed')) {
+    const topbar  = document.getElementById('topbar') as HTMLElement | null;
+    const wrapper = document.getElementById('explorer-wrapper') as HTMLElement | null;
+    if (topbar)  topbar.style.display = 'none';
+    if (wrapper) wrapper.style.height = '100vh';
+  }
+
   const fallback     = document.getElementById('explorer-fallback') as HTMLElement;
   const mountEl      = document.getElementById('explorer-mount') as HTMLElement;
   const specUrlEl    = document.getElementById('topbar-spec-url') as HTMLElement | null;
