@@ -12,6 +12,9 @@ const snippet = `<!-- 1. Add a container -->
     { url: 'https://your-api.com/openapi.json' }
   );
 <\/script>`;
+import IconCopy from './icons/IconCopy.astro';
+import IconCheck from './icons/IconCheck.astro';
+import IconArrowRight from './icons/IconArrowRight.astro';
 ---
 
 <section
@@ -46,13 +49,8 @@ const snippet = `<!-- 1. Add a container -->
           onmouseout="this.style.background='rgba(99,102,241,0.08)';this.style.color='#818cf8'"
           aria-label="Copy code"
         >
-          <svg id="qi-copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-          </svg>
-          <svg id="qi-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="hidden" style="color: #34d399;">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
+          <IconCopy size={14} id="qi-copy-icon" />
+          <IconCheck size={14} id="qi-check-icon" class="hidden" style="color: #34d399;" />
           <span id="qi-copy-label">Copy</span>
         </button>
 
@@ -86,10 +84,7 @@ const snippet = `<!-- 1. Add a container -->
         onmouseout="this.style.color='var(--color-accent)'"
       >
         See all integration options
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
+        <IconArrowRight size={14} />
       </a>
     </div>
 
