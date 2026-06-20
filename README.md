@@ -45,11 +45,12 @@ npm run preview  # Preview the build locally
 
 ## Deployment
 
-The site ships as a static build served by nginx. A `Dockerfile` and `docker-compose.yml` are included.
+The site ships as a static build served by nginx via a two-stage Docker image.
 
 ```bash
-# Build and run the container
-docker compose up --build
+# Build the image
+docker build -t getman-website .
+docker run -p 3000:80 getman-website
 ```
 
 The nginx config (`nginx.conf`) enables `gzip_static` and sets a 1-year immutable cache on hashed assets.
