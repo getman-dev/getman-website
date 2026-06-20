@@ -1,0 +1,210 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "JSONPlaceholder",
+    "description": "A simple fake REST API for prototyping and testing. Provides posts, comments, albums, photos, todos, and users.",
+    "version": "1.0.0",
+    "contact": { "url": "https://jsonplaceholder.typicode.com" },
+    "license": { "name": "MIT" }
+  },
+  "servers": [{ "url": "https://jsonplaceholder.typicode.com", "description": "Public API" }],
+  "tags": [
+    { "name": "posts" },
+    { "name": "comments" },
+    { "name": "users" },
+    { "name": "todos" }
+  ],
+  "paths": {
+    "/posts": {
+      "get": {
+        "tags": ["posts"],
+        "summary": "List all posts",
+        "operationId": "listPosts",
+        "parameters": [
+          { "name": "userId", "in": "query", "schema": { "type": "integer" }, "description": "Filter by author" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Array of posts",
+            "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Post" } } } }
+          }
+        }
+      },
+      "post": {
+        "tags": ["posts"],
+        "summary": "Create a post",
+        "operationId": "createPost",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/NewPost" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Created post",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Post" } } }
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+      "get": {
+        "tags": ["posts"],
+        "summary": "Get a post",
+        "operationId": "getPost",
+        "responses": {
+          "200": { "description": "A post", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Post" } } } },
+          "404": { "description": "Not found" }
+        }
+      },
+      "put": {
+        "tags": ["posts"],
+        "summary": "Replace a post",
+        "operationId": "replacePost",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/NewPost" } } } },
+        "responses": { "200": { "description": "Updated post", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Post" } } } } }
+      },
+      "patch": {
+        "tags": ["posts"],
+        "summary": "Update a post",
+        "operationId": "updatePost",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/NewPost" } } } },
+        "responses": { "200": { "description": "Updated post", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Post" } } } } }
+      },
+      "delete": {
+        "tags": ["posts"],
+        "summary": "Delete a post",
+        "operationId": "deletePost",
+        "responses": { "200": { "description": "Empty object" } }
+      }
+    },
+    "/posts/{id}/comments": {
+      "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+      "get": {
+        "tags": ["comments"],
+        "summary": "List comments for a post",
+        "operationId": "listPostComments",
+        "responses": { "200": { "description": "Comments", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Comment" } } } } } }
+      }
+    },
+    "/comments": {
+      "get": {
+        "tags": ["comments"],
+        "summary": "List all comments",
+        "operationId": "listComments",
+        "parameters": [{ "name": "postId", "in": "query", "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Comments", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Comment" } } } } } }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["users"],
+        "summary": "List all users",
+        "operationId": "listUsers",
+        "responses": { "200": { "description": "Users", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/User" } } } } } }
+      }
+    },
+    "/users/{id}": {
+      "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+      "get": {
+        "tags": ["users"],
+        "summary": "Get a user",
+        "operationId": "getUser",
+        "responses": {
+          "200": { "description": "A user", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } } },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/todos": {
+      "get": {
+        "tags": ["todos"],
+        "summary": "List all todos",
+        "operationId": "listTodos",
+        "parameters": [
+          { "name": "userId", "in": "query", "schema": { "type": "integer" } },
+          { "name": "completed", "in": "query", "schema": { "type": "boolean" } }
+        ],
+        "responses": { "200": { "description": "Todos", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Todo" } } } } } }
+      }
+    },
+    "/todos/{id}": {
+      "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+      "get": {
+        "tags": ["todos"],
+        "summary": "Get a todo",
+        "operationId": "getTodo",
+        "responses": { "200": { "description": "A todo", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Todo" } } } } }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id":     { "type": "integer", "example": 1 },
+          "userId": { "type": "integer", "example": 1 },
+          "title":  { "type": "string",  "example": "sunt aut facere repellat provident" },
+          "body":   { "type": "string",  "example": "quia et suscipit\nsuscipit recusandae consequuntur" }
+        }
+      },
+      "NewPost": {
+        "type": "object",
+        "required": ["title", "body", "userId"],
+        "properties": {
+          "userId": { "type": "integer" },
+          "title":  { "type": "string" },
+          "body":   { "type": "string" }
+        }
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "id":     { "type": "integer" },
+          "postId": { "type": "integer" },
+          "name":   { "type": "string" },
+          "email":  { "type": "string", "format": "email" },
+          "body":   { "type": "string" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id":       { "type": "integer" },
+          "name":     { "type": "string",  "example": "Leanne Graham" },
+          "username": { "type": "string",  "example": "Bret" },
+          "email":    { "type": "string",  "format": "email" },
+          "phone":    { "type": "string" },
+          "website":  { "type": "string" },
+          "address": {
+            "type": "object",
+            "properties": {
+              "street":  { "type": "string" },
+              "suite":   { "type": "string" },
+              "city":    { "type": "string" },
+              "zipcode": { "type": "string" }
+            }
+          },
+          "company": {
+            "type": "object",
+            "properties": {
+              "name":        { "type": "string" },
+              "catchPhrase": { "type": "string" },
+              "bs":          { "type": "string" }
+            }
+          }
+        }
+      },
+      "Todo": {
+        "type": "object",
+        "properties": {
+          "id":        { "type": "integer" },
+          "userId":    { "type": "integer" },
+          "title":     { "type": "string" },
+          "completed": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import InlineDemo from '../components/InlineDemo.astro';
+import FeaturesGrid from '../components/FeaturesGrid.astro';
+import QuickInstall from '../components/QuickInstall.astro';
+---
+
+<BaseLayout title="GetMan — A beautiful OpenAPI explorer you'll actually enjoy using">
+  <TopBar slot="topbar" />
+  <Hero />
+  <InlineDemo />
+  <FeaturesGrid />
+  <QuickInstall />
+  <Footer slot="footer" />
+</BaseLayout>

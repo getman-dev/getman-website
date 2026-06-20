@@ -1,0 +1,149 @@
+---
+import CodeBlock from './CodeBlock.astro';
+
+const tabs = [
+  {
+    id: 'html',
+    label: 'Plain HTML',
+    lang: 'html',
+    code: `<!DOCTYPE html>
+<html>
+  <head>
+    <title>My API Docs</title>
+  </head>
+  <body>
+    <!-- Step 1: container -->
+    <div id="api-docs" style="height: 100vh"></div>
+
+    <!-- Step 2: script -->
+    <script src="https://cdn.getman.dev/v1/getman.min.js"><\/script>
+
+    <!-- Step 3: mount -->
+    <script>
+      ApiExplorer.mountApiExplorer(
+        document.getElementById('api-docs'),
+        { url: 'https://your-api.com/openapi.json' }
+      );
+    <\/script>
+  </body>
+</html>`,
+  },
+  {
+    id: 'react',
+    label: 'React',
+    lang: 'jsx',
+    code: `import { useEffect, useRef } from 'react';
+
+export function ApiDocs({ specUrl }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.getman.dev/v1/getman.min.js';
+    script.onload = () => {
+      const unmount = window.ApiExplorer.mountApiExplorer(
+        containerRef.current,
+        { url: specUrl }
+      );
+      return unmount; // returned from useEffect for cleanup
+    };
+    document.head.appendChild(script);
+  }, [specUrl]);
+
+  return <div ref={containerRef} style={{ height: '100vh' }} />;
+}`,
+  },
+  {
+    id: 'vue',
+    label: 'Vue 3',
+    lang: 'vue',
+    code: `<script setup>
+import { useTemplateRef, onMounted, onUnmounted, watch } from 'vue';
+
+const props = defineProps({ specUrl: String });
+
+const container = useTemplateRef('container');
+let unmount = null;
+
+async function mount() {
+  if (unmount) { unmount(); unmount = null; }
+  if (!window.ApiExplorer) {
+    await new Promise((resolve) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.getman.dev/v1/getman.min.js';
+      s.onload = resolve;
+      document.head.appendChild(s);
+    });
+  }
+  unmount = window.ApiExplorer.mountApiExplorer(
+    container.value,
+    { url: props.specUrl }
+  );
+}
+
+onMounted(mount);
+watch(() => props.specUrl, mount);
+onUnmounted(() => unmount?.());
+<\/script>
+
+<template>
+  <div ref="container" style="height: 100vh" />
+</template>`,
+  },
+];
+---
+
+<div>
+  <!-- Tab buttons -->
+  <div
+    class="flex gap-1 rounded-xl p-1"
+    role="tablist"
+    style="background-color: var(--color-border);"
+  >
+    {tabs.map((tab, i) => (
+      <button
+        class="fw-tab flex-1 rounded-lg px-4 py-2 text-sm font-semibold transition-all"
+        role="tab"
+        data-tab={tab.id}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        style={i === 0
+          ? 'background: var(--color-surface); color: var(--color-text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08);'
+          : 'background: transparent; color: var(--color-text-secondary);'}
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
+
+  <!-- Tab panels -->
+  {tabs.map((tab, i) => (
+    <div
+      class="fw-panel mt-3"
+      data-panel={tab.id}
+      style={i !== 0 ? 'display: none;' : ''}
+    >
+      <CodeBlock code={tab.code} lang={tab.lang} />
+    </div>
+  ))}
+</div>
+
+<script>
+  const tabBtns  = document.querySelectorAll<HTMLButtonElement>('.fw-tab');
+  const panels   = document.querySelectorAll<HTMLElement>('.fw-panel');
+
+  const activeStyle   = 'background: var(--color-surface); color: var(--color-text-primary); box-shadow: 0 1px 3px rgba(0,0,0,0.08);';
+  const inactiveStyle = 'background: transparent; color: var(--color-text-secondary);';
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabBtns.forEach(b => {
+        b.style.cssText  = b === btn ? activeStyle : inactiveStyle;
+        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+      });
+      panels.forEach(p => {
+        p.style.display = p.dataset.panel === target ? '' : 'none';
+      });
+    });
+  });
+</script>

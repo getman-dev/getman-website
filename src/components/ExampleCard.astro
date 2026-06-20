@@ -1,0 +1,68 @@
+---
+import type { ExampleSpec } from '../data/examples';
+
+interface Props {
+  spec: ExampleSpec;
+}
+
+const { spec } = Astro.props;
+
+const explorerUrl = `/explorer?spec=${encodeURIComponent(spec.url)}`;
+
+const formatStyle = spec.format === 'JSON'
+  ? { bg: '#dbeafe', text: '#1d4ed8', border: '#bfdbfe' }   // blue
+  : { bg: '#ede9fe', text: '#6d28d9', border: '#ddd6fe' };   // violet
+
+const complexityStyle = {
+  Simple:  { bg: '#dcfce7', text: '#15803d', border: '#bbf7d0' },
+  Medium:  { bg: '#fef9c3', text: '#a16207', border: '#fef08a' },
+  Complex: { bg: '#fee2e2', text: '#b91c1c', border: '#fecaca' },
+}[spec.complexity];
+---
+
+<article
+  class="flex flex-col rounded-2xl border p-5 transition-shadow hover:shadow-md"
+  style="border-color: var(--color-border); background-color: var(--color-surface);"
+  data-format={spec.format}
+  data-complexity={spec.complexity}
+>
+  <!-- Name + badges -->
+  <div class="mb-3 flex flex-wrap items-start justify-between gap-2">
+    <h3 class="text-base font-bold leading-snug" style="color: var(--color-text-primary);">
+      {spec.name}
+    </h3>
+    <div class="flex shrink-0 items-center gap-1.5">
+      <span
+        class="rounded-full border px-2 py-0.5 text-[11px] font-semibold"
+        style={`background-color: ${formatStyle.bg}; color: ${formatStyle.text}; border-color: ${formatStyle.border};`}
+      >
+        {spec.format}
+      </span>
+      <span
+        class="rounded-full border px-2 py-0.5 text-[11px] font-semibold"
+        style={`background-color: ${complexityStyle.bg}; color: ${complexityStyle.text}; border-color: ${complexityStyle.border};`}
+      >
+        {spec.complexity}
+      </span>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <p class="mb-5 grow text-sm leading-relaxed" style="color: var(--color-text-secondary);">
+    {spec.description}
+  </p>
+
+  <!-- CTA -->
+  <a
+    href={explorerUrl}
+    class="inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-bold text-white transition-transform"
+    style="background-color: var(--color-accent); box-shadow: 3px 3px 0 var(--color-accent-shadow);"
+    onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0 var(--color-accent-shadow)'"
+    onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0 var(--color-accent-shadow)'"
+  >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+    Open in Explorer
+  </a>
+</article>

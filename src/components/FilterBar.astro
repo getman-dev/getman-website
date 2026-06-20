@@ -1,0 +1,52 @@
+---
+const chips = [
+  { label: 'All',     filter: 'all' },
+  { label: 'JSON',    filter: 'JSON' },
+  { label: 'YAML',    filter: 'YAML' },
+  { label: 'Simple',  filter: 'Simple' },
+  { label: 'Medium',  filter: 'Medium' },
+  { label: 'Complex', filter: 'Complex' },
+];
+---
+
+<div class="flex flex-wrap gap-2" role="group" aria-label="Filter examples">
+  {chips.map(({ label, filter }, i) => (
+    <button
+      class="filter-chip rounded-full border px-4 py-1.5 text-sm font-medium transition-all"
+      data-filter={filter}
+      aria-pressed={i === 0 ? 'true' : 'false'}
+      style={i === 0
+        ? `background-color: var(--color-accent); color: white; border-color: var(--color-accent); box-shadow: 2px 2px 0 var(--color-accent-shadow);`
+        : `background-color: white; color: var(--color-text-secondary); border-color: var(--color-border);`}
+    >
+      {label}
+    </button>
+  ))}
+</div>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.filter-chip');
+  const cards = document.querySelectorAll<HTMLElement>('[data-format]');
+
+  const activeStyle   = `background-color: var(--color-accent); color: white; border-color: var(--color-accent); box-shadow: 2px 2px 0 var(--color-accent-shadow);`;
+  const inactiveStyle = `background-color: white; color: var(--color-text-secondary); border-color: var(--color-border);`;
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter ?? 'all';
+
+      chips.forEach(c => {
+        const active = c === chip;
+        c.style.cssText = active ? activeStyle : inactiveStyle;
+        c.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      cards.forEach(card => {
+        const matchesFormat     = card.dataset.format === filter;
+        const matchesComplexity = card.dataset.complexity === filter;
+        const show = filter === 'all' || matchesFormat || matchesComplexity;
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>

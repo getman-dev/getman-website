@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+import Footer from '../components/Footer.astro';
+import ExampleCard from '../components/ExampleCard.astro';
+import FilterBar from '../components/FilterBar.astro';
+import { examples } from '../data/examples';
+---
+
+<BaseLayout
+  title="Explore OpenAPI Specs — GetMan"
+  description="Open real-world OpenAPI specs in the interactive GetMan explorer — no login, no setup."
+>
+  <TopBar slot="topbar" />
+
+  <!-- Page header -->
+  <div
+    class="border-b px-6 py-14 text-center"
+    style="border-color: var(--color-border); background: linear-gradient(160deg, var(--color-gradient-warm) 0%, var(--color-bg) 60%);"
+  >
+    <h1 class="mb-3 text-4xl font-extrabold tracking-tight sm:text-5xl" style="color: var(--color-text-primary);">
+      Explore OpenAPI Specs
+    </h1>
+    <p class="mx-auto max-w-xl text-lg" style="color: var(--color-text-secondary);">
+      Open any of these real-world specs in the interactive explorer — no login, no setup.
+    </p>
+  </div>
+
+  <!-- Filter + grid -->
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    <div class="mb-8">
+      <FilterBar />
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {examples.map(spec => <ExampleCard spec={spec} />)}
+    </div>
+  </div>
+
+  <Footer slot="footer" />
+</BaseLayout>

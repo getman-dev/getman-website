@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Light mode tokens */
+  --color-bg: #faf8f5;
+  --color-surface: #ffffff;
+  --color-border: #e8e0d5;
+  --color-text-primary: #1c1917;
+  --color-text-secondary: #78716c;
+  --color-text-muted: #a8a29e;
+  --color-accent: #f97316;
+  --color-accent-shadow: #c2410c;
+  --color-accent-hover: #ea6e00;
+  --color-accent-subtle: #fff7ed;
+  --color-gradient-warm: #fff9f0;
+  --color-highlight: #fed7aa;
+  --color-code-bg: #1c1917;
+  --color-code-border: #292524;
+  --color-code-type: #6d28d9;
+  --color-badge-bg: #fef3c7;
+  --color-badge-text: #92400e;
+  --color-badge-border: #fde68a;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+  }
+}
+
+/* ── Dark mode ────────────────────────────────────────────────────────────── */
+
+/* System preference (no manual override) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #1c1917;
+    --color-surface: #292524;
+    --color-border: #3d3835;
+    --color-text-primary: #fafaf9;
+    --color-text-secondary: #a8a29e;
+    --color-text-muted: #57534e;
+    --color-accent-subtle: #3d1a08;
+    --color-gradient-warm: #221c14;
+    --color-highlight: rgba(249, 115, 22, 0.25);
+    --color-code-bg: #0c0a09;
+    --color-code-border: #1c1917;
+    --color-code-type: #a78bfa;
+    --color-badge-bg: #451a03;
+    --color-badge-text: #fed7aa;
+    --color-badge-border: #7c2d12;
+  }
+}
+
+/* Manual dark override */
+:root[data-theme="dark"] {
+  --color-bg: #1c1917;
+  --color-surface: #292524;
+  --color-border: #3d3835;
+  --color-text-primary: #fafaf9;
+  --color-text-secondary: #a8a29e;
+  --color-text-muted: #57534e;
+  --color-accent-subtle: #3d1a08;
+  --color-gradient-warm: #221c14;
+  --color-highlight: rgba(249, 115, 22, 0.25);
+  --color-code-bg: #0c0a09;
+  --color-code-border: #1c1917;
+  --color-code-type: #a78bfa;
+  --color-badge-bg: #451a03;
+  --color-badge-text: #fed7aa;
+  --color-badge-border: #7c2d12;
+}
+
+/* Manual light override (beats system dark) */
+:root[data-theme="light"] {
+  --color-bg: #faf8f5;
+  --color-surface: #ffffff;
+  --color-border: #e8e0d5;
+  --color-text-primary: #1c1917;
+  --color-text-secondary: #78716c;
+  --color-text-muted: #a8a29e;
+  --color-accent-subtle: #fff7ed;
+  --color-gradient-warm: #fff9f0;
+  --color-highlight: #fed7aa;
+  --color-code-bg: #1c1917;
+  --color-code-border: #292524;
+  --color-code-type: #6d28d9;
+  --color-badge-bg: #fef3c7;
+  --color-badge-text: #92400e;
+  --color-badge-border: #fde68a;
+}

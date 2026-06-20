@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TopBar from '../components/TopBar.astro';
+---
+
+<BaseLayout
+  title="Explorer — GetMan"
+  description="Full-screen interactive OpenAPI explorer. Load any spec by URL."
+>
+  <TopBar slot="topbar" variant="explorer" />
+
+  <!-- Full-height explorer area -->
+  <div
+    id="explorer-wrapper"
+    style="height: calc(100vh - 4rem);"
+  >
+    <!-- Fallback: shown when no ?spec param is present -->
+    <div
+      id="explorer-fallback"
+      class="flex h-full flex-col items-center justify-center gap-6 px-6 text-center"
+    >
+      <div>
+        <h2 class="mb-2 text-xl font-bold" style="color: var(--color-text-primary);">
+          No spec provided
+        </h2>
+        <p class="text-sm" style="color: var(--color-text-secondary);">
+          Choose one from <a href="/examples" class="font-semibold underline" style="color: var(--color-accent);">Examples</a>
+          or paste a URL below.
+        </p>
+      </div>
+
+      <form
+        id="spec-form"
+        class="flex w-full max-w-lg flex-col gap-3 sm:flex-row"
+      >
+        <input
+          id="spec-input"
+          type="url"
+          placeholder="https://your-api.com/openapi.json"
+          required
+          class="flex-1 rounded-xl border px-4 py-2.5 text-sm outline-none transition-shadow focus:ring-2"
+          style="border-color: var(--color-border); background: white; color: var(--color-text-primary); focus-ring-color: var(--color-accent);"
+        />
+        <button
+          type="submit"
+          class="rounded-xl px-5 py-2.5 text-sm font-bold text-white transition-transform"
+          style="background-color: var(--color-accent); box-shadow: 3px 3px 0 var(--color-accent-shadow);"
+          onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0 var(--color-accent-shadow)'"
+          onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0 var(--color-accent-shadow)'"
+        >
+          Open
+        </button>
+      </form>
+    </div>
+
+    <!-- Explorer mount target (hidden until a spec is loaded) -->
+    <div
+      id="explorer-mount"
+      style="height: 100%; display: none;"
+    ></div>
+  </div>
+</BaseLayout>
+
+<script>
+  const fallback     = document.getElementById('explorer-fallback') as HTMLElement;
+  const mountEl      = document.getElementById('explorer-mount') as HTMLElement;
+  const specUrlEl    = document.getElementById('topbar-spec-url') as HTMLElement | null;
+  const specForm     = document.getElementById('spec-form') as HTMLFormElement;
+  const specInput    = document.getElementById('spec-input') as HTMLInputElement;
+
+  let unmount: (() => void) | null = null;
+
+  function loadGetMan(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if ((window as any).ApiExplorer) { resolve(); return; }
+      const s = document.createElement('script');
+      s.src = '/getman.js';
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('Failed to load GetMan'));
+      document.head.appendChild(s);
+    });
+  }
+
+  function showSpecUrl(url: string) {
+    if (specUrlEl) {
+      specUrlEl.textContent = url;
+      specUrlEl.title = url;
+      specUrlEl.style.display = '';
+    }
+  }
+
+  async function mountExplorer(url: string) {
+    await loadGetMan();
+    if (unmount) { unmount(); unmount = null; }
+
+    fallback.style.display = 'none';
+    mountEl.style.display = '';
+
+    unmount = (window as any).ApiExplorer.mountApiExplorer(mountEl, { url });
+    showSpecUrl(url);
+  }
+
+  // Read ?spec= on load
+  const params = new URLSearchParams(window.location.search);
+  const specParam = params.get('spec');
+  if (specParam) {
+    mountExplorer(specParam);
+  }
+
+  // Handle form submit (no-spec fallback)
+  specForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const url = specInput.value.trim();
+    if (!url) return;
+    // Update the URL bar so the Share button copies the right link
+    const next = new URL(window.location.href);
+    next.searchParams.set('spec', url);
+    history.replaceState(null, '', next.toString());
+    mountExplorer(url);
+  });
+</script>

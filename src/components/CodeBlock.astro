@@ -1,0 +1,76 @@
+---
+interface Props {
+  code: string;
+  label?: string;
+  lang?: string;
+  id?: string;
+}
+
+const { code, label, lang, id } = Astro.props;
+const copyId = id ?? `cb-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<div>
+  {label && (
+    <p class="mb-2 text-[10px] font-semibold uppercase tracking-widest" style="color: var(--color-text-muted);">
+      {label}
+    </p>
+  )}
+  <div
+    class="relative rounded-2xl border"
+    style="background-color: var(--color-code-bg); border-color: var(--color-code-border);"
+  >
+    {lang && (
+      <span
+        class="absolute left-4 top-3 text-[10px] font-semibold uppercase tracking-widest"
+        style="color: #57534e;"
+      >
+        {lang}
+      </span>
+    )}
+
+    <!-- Copy button -->
+    <button
+      class="cb-copy-btn absolute right-3 top-3 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors"
+      data-code={code}
+      data-copy-id={copyId}
+      style="color: #a8a29e; background: rgba(255,255,255,0.05);"
+      onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='white'"
+      onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#a8a29e'"
+      aria-label="Copy code"
+    >
+      <svg class="cb-copy-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <svg class="cb-check-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none; color:#34d399;">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span class="cb-copy-label">Copy</span>
+    </button>
+
+    <pre
+      class="overflow-x-auto text-sm leading-relaxed"
+      style={`padding: ${lang ? '2.5rem' : '1.25rem'} 1.25rem 1.25rem; font-family: var(--font-mono);`}
+    ><code style="color: #d6d3d1;">{code}</code></pre>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.cb-copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(btn.dataset.code ?? '');
+      const copyIcon  = btn.querySelector<SVGElement>('.cb-copy-icon');
+      const checkIcon = btn.querySelector<SVGElement>('.cb-check-icon');
+      const label     = btn.querySelector<HTMLElement>('.cb-copy-label');
+      if (copyIcon)  copyIcon.style.display  = 'none';
+      if (checkIcon) checkIcon.style.display = '';
+      if (label)     label.textContent = 'Copied!';
+      setTimeout(() => {
+        if (copyIcon)  copyIcon.style.display  = '';
+        if (checkIcon) checkIcon.style.display = 'none';
+        if (label)     label.textContent = 'Copy';
+      }, 1500);
+    });
+  });
+</script>

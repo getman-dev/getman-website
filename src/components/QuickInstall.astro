@@ -1,0 +1,116 @@
+---
+const snippet = `<!-- 1. Add a container -->
+<div id="api-docs" style="height: 100vh"></div>
+
+<!-- 2. Load the script -->
+<script src="https://cdn.getman.dev/v1/getman.min.js"><\/script>
+
+<!-- 3. Mount -->
+<script>
+  ApiExplorer.mountApiExplorer(
+    document.getElementById('api-docs'),
+    { url: 'https://your-api.com/openapi.json' }
+  );
+<\/script>`;
+---
+
+<section
+  class="px-6 py-20"
+  style="background: linear-gradient(160deg, var(--color-gradient-warm) 0%, var(--color-bg) 60%);"
+>
+  <div class="mx-auto max-w-3xl text-center">
+
+    <h2 class="mb-3 text-3xl font-bold tracking-tight sm:text-4xl" style="color: var(--color-text-primary);">
+      One script tag. That's it.
+    </h2>
+    <p class="mb-10 text-base" style="color: var(--color-text-secondary);">
+      No build step. No npm install. Paste these three lines and you're done.
+    </p>
+
+    <!-- Code block -->
+    <div class="text-left">
+      <p class="mb-2 text-[10px] font-semibold uppercase tracking-widest" style="color: var(--color-text-muted);">
+        Minimal embed
+      </p>
+      <div
+        class="relative rounded-2xl border"
+        style="background-color: var(--color-code-bg); border-color: var(--color-code-border);"
+      >
+        <!-- Copy button -->
+        <button
+          id="qi-copy-btn"
+          data-code={snippet}
+          class="absolute right-3 top-3 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors"
+          style="color: #a8a29e; background: rgba(255,255,255,0.05);"
+          onmouseover="this.style.background='rgba(255,255,255,0.1)';this.style.color='white'"
+          onmouseout="this.style.background='rgba(255,255,255,0.05)';this.style.color='#a8a29e'"
+          aria-label="Copy code"
+        >
+          <svg id="qi-copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <svg id="qi-check-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="hidden" style="color: #34d399;">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span id="qi-copy-label">Copy</span>
+        </button>
+
+        <!-- Code -->
+        <pre class="overflow-x-auto p-5 pr-20 text-sm leading-relaxed" style="font-family: var(--font-mono);"><code id="qi-code">{snippet.split('\n').map((line, i) => {
+  // colour-code the three comment lines as muted, rest as code
+  if (line.startsWith('<!--')) {
+    return <span style="color: #a8a29e;">{line + '\n'}</span>;
+  }
+  if (line.includes('<script') || line.includes('<\\/script>')) {
+    return <span style="color: #86efac;">{line + '\n'}</span>;
+  }
+  if (line.includes('ApiExplorer')) {
+    return <span style="color: #93c5fd;">{line + '\n'}</span>;
+  }
+  if (line.trim() === '') {
+    return '\n';
+  }
+  return <span style="color: #d6d3d1;">{line + '\n'}</span>;
+})}</code></pre>
+      </div>
+    </div>
+
+    <!-- Docs link -->
+    <div class="mt-6">
+      <a
+        href="/docs"
+        class="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors"
+        style="color: var(--color-accent);"
+        onmouseover="this.style.color='var(--color-accent-hover)'"
+        onmouseout="this.style.color='var(--color-accent)'"
+      >
+        See all integration options
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('qi-copy-btn');
+  const copyIcon = document.getElementById('qi-copy-icon');
+  const checkIcon = document.getElementById('qi-check-icon');
+  const label = document.getElementById('qi-copy-label');
+
+  btn?.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(btn.dataset.code ?? '');
+    copyIcon?.classList.add('hidden');
+    checkIcon?.classList.remove('hidden');
+    if (label) label.textContent = 'Copied!';
+    setTimeout(() => {
+      copyIcon?.classList.remove('hidden');
+      checkIcon?.classList.add('hidden');
+      if (label) label.textContent = 'Copy';
+    }, 1500);
+  });
+</script>
