@@ -1,6 +1,6 @@
 ---
 const petstoreUrl = 'https://petstore3.swagger.io/api/v3/openapi.json';
-const explorerSrc = `/explorer/?spec=${encodeURIComponent(petstoreUrl)}&embed=1`;
+const explorerSrc = `/explorer/?spec=${encodeURIComponent(petstoreUrl)}&hideToolbar`;
 ---
 
 <section class="px-6 py-16">
@@ -21,7 +21,8 @@ const explorerSrc = `/explorer/?spec=${encodeURIComponent(petstoreUrl)}&embed=1`
     <iframe
       src={explorerSrc}
       title="Live API Explorer"
-      style="width: 100%; height: 600px; border-radius: 1rem; border: 1px solid var(--color-border); box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: block;"
+      class="demo-iframe"
+      style="width: 100%; border-radius: 1rem; border: 1px solid var(--color-border); box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: block;"
       loading="lazy"
     ></iframe>
 
@@ -29,7 +30,12 @@ const explorerSrc = `/explorer/?spec=${encodeURIComponent(petstoreUrl)}&embed=1`
 </section>
 
 <style>
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+  .demo-iframe {
+    height: 420px;
+  }
+  @media (min-width: 640px) {
+    .demo-iframe {
+      height: 600px;
+    }
   }
 </style>
