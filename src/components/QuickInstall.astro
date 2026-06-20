@@ -3,11 +3,11 @@ const snippet = `<!-- 1. Add a container -->
 <div id="api-docs" style="height: 100vh"></div>
 
 <!-- 2. Load the script -->
-<script src="https://cdn.getman.dev/v1/getman.min.js"><\/script>
+<script src="https://cdn.getman.dev/latest/getman-ui.js"><\/script>
 
 <!-- 3. Mount -->
 <script>
-  ApiExplorer.mountApiExplorer(
+  GetMan.launch(
     document.getElementById('api-docs'),
     { url: 'https://your-api.com/openapi.json' }
   );
@@ -63,7 +63,7 @@ import IconArrowRight from './icons/IconArrowRight.astro';
   if (line.includes('<script') || line.includes('<\\/script>')) {
     return <span style="color: #a5b4fc;">{line + '\n'}</span>;
   }
-  if (line.includes('ApiExplorer')) {
+  if (line.includes('GetMan')) {
     return <span style="color: #c4b5fd;">{line + '\n'}</span>;
   }
   if (line.trim() === '') {

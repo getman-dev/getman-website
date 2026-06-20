@@ -16,11 +16,11 @@ const tabs = [
     <div id="api-docs" style="height: 100vh"></div>
 
     <!-- Step 2: script -->
-    <script src="https://cdn.getman.dev/v1/getman.min.js"><\/script>
+    <script src="https://cdn.getman.dev/latest/getman-ui.js"><\/script>
 
     <!-- Step 3: mount -->
     <script>
-      ApiExplorer.mountApiExplorer(
+      GetMan.launch(
         document.getElementById('api-docs'),
         { url: 'https://your-api.com/openapi.json' }
       );
@@ -39,9 +39,9 @@ export function ApiDocs({ specUrl }) {
 
   useEffect(() => {
     const script = document.createElement('script');
-    script.src = 'https://cdn.getman.dev/v1/getman.min.js';
+    script.src = 'https://cdn.getman.dev/latest/getman-ui.js';
     script.onload = () => {
-      const unmount = window.ApiExplorer.mountApiExplorer(
+      const unmount = window.GetMan.launch(
         containerRef.current,
         { url: specUrl }
       );
@@ -67,15 +67,15 @@ let unmount = null;
 
 async function mount() {
   if (unmount) { unmount(); unmount = null; }
-  if (!window.ApiExplorer) {
+  if (!window.GetMan) {
     await new Promise((resolve) => {
       const s = document.createElement('script');
-      s.src = 'https://cdn.getman.dev/v1/getman.min.js';
+      s.src = 'https://cdn.getman.dev/latest/getman-ui.js';
       s.onload = resolve;
       document.head.appendChild(s);
     });
   }
-  unmount = window.ApiExplorer.mountApiExplorer(
+  unmount = window.GetMan.launch(
     container.value,
     { url: props.specUrl }
   );
