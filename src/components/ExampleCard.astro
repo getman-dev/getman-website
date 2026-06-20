@@ -1,5 +1,6 @@
 ---
 import type { ExampleSpec } from '../data/examples';
+import IconPlay from './icons/IconPlay.astro';
 
 interface Props {
   spec: ExampleSpec;
@@ -60,9 +61,7 @@ const complexityStyle = {
     onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0 var(--color-accent-shadow)'"
     onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0 var(--color-accent-shadow)'"
   >
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <polygon points="5 3 19 12 5 21 5 3" />
-    </svg>
+    <IconPlay size={14} stroke-width="2.5" />
     Open in Explorer
   </a>
 </article>
