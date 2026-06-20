@@ -5,7 +5,7 @@ interface Props {
 }
 
 const { variant = 'default', specUrl } = Astro.props;
-const githubUrl = 'https://github.com/mohsenk/getman';
+import { githubUrl } from '../config';
 ---
 
 <header
