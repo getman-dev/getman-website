@@ -21,21 +21,10 @@ const explorerSrc = `/explorer/?spec=${encodeURIComponent(petstoreUrl)}&hideTool
     <iframe
       src={explorerSrc}
       title="Live API Explorer"
-      class="demo-iframe"
+      class="h-[420px] sm:h-[800px]"
       style="width: 100%; border-radius: 1rem; border: 1px solid var(--color-border); box-shadow: 0 4px 24px rgba(0,0,0,0.06); display: block;"
       loading="lazy"
     ></iframe>
 
   </div>
 </section>
-
-<style>
-  .demo-iframe {
-    height: 420px;
-  }
-  @media (min-width: 640px) {
-    .demo-iframe {
-      height: 600px;
-    }
-  }
-</style>

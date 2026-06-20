@@ -11,9 +11,9 @@ import IconPlay from '../components/icons/IconPlay.astro';
 
 const step1 = `<div id="api-docs" style="height: 100vh"></div>`;
 
-const step2 = `<script src="https://cdn.getman.dev/v1/getman.min.js"><\/script>`;
+const step2 = `<script src="https://cdn.getman.dev/latest/getman-ui.js"><\/script>`;
 
-const step3 = `ApiExplorer.mountApiExplorer(
+const step3 = `GetMan.launch(
   document.getElementById('api-docs'),
   { url: 'https://your-api.com/openapi.json' }
 );`;
@@ -83,7 +83,7 @@ const step3 = `ApiExplorer.mountApiExplorer(
         </div>
         <CodeBlock code={step3} label="JavaScript" lang="js" />
         <p class="mt-3 text-sm" style="color: var(--color-text-secondary);">
-          <code class="rounded px-1 py-0.5 text-xs font-mono" style="background-color: var(--color-border);">mountApiExplorer</code> returns
+          <code class="rounded px-1 py-0.5 text-xs font-mono" style="background-color: var(--color-border);">launch</code> returns
           a cleanup function — call it to unmount and release all resources.
         </p>
       </section>
@@ -107,7 +107,7 @@ const step3 = `ApiExplorer.mountApiExplorer(
       <section>
         <h2 class="mb-2 text-2xl font-bold" style="color: var(--color-text-primary);">API reference</h2>
         <p class="mb-6 text-sm font-mono" style="color: var(--color-text-secondary);">
-          <code>mountApiExplorer(target, options?) → () =&gt; void</code>
+          <code>launch(target, options?) → () =&gt; void</code>
         </p>
 
         <div class="overflow-x-auto rounded-2xl border" style="border-color: var(--color-border);">
