@@ -1,18 +1,20 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopBar from '../components/TopBar.astro';
+
+const isEmbed = Astro.url.searchParams.has('embed');
 ---
 
 <BaseLayout
   title="Explorer — GetMan"
   description="Full-screen interactive OpenAPI explorer. Load any spec by URL."
 >
-  <TopBar slot="topbar" variant="explorer" />
+  {!isEmbed && <TopBar slot="topbar" variant="explorer" />}
 
   <!-- Full-height explorer area -->
   <div
     id="explorer-wrapper"
-    style="height: calc(100vh - 4rem);"
+    style={`height: ${isEmbed ? '100vh' : 'calc(100vh - 4rem)'};`}
   >
     <!-- Fallback: shown when no ?spec param is present -->
     <div
