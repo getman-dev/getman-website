@@ -6,13 +6,20 @@ import Hero from '../components/Hero.astro';
 import InlineDemo from '../components/InlineDemo.astro';
 import FeaturesGrid from '../components/FeaturesGrid.astro';
 import QuickInstall from '../components/QuickInstall.astro';
+import SupportNudge from '../components/SupportNudge.astro';
+import Divider from '../components/Divider.astro';
 ---
 
 <BaseLayout title="GetMan — A beautiful OpenAPI explorer you'll actually enjoy using">
   <TopBar slot="topbar" />
   <Hero />
+  <Divider />
   <InlineDemo />
+  <Divider />
+  <SupportNudge />
+  <Divider />
   <FeaturesGrid />
+  <Divider />
   <QuickInstall />
   <Footer slot="footer" />
 </BaseLayout>

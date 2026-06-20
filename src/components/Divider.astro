@@ -1,0 +1,10 @@
+---
+interface Props {
+  narrow?: boolean;
+}
+const { narrow = false } = Astro.props;
+---
+
+<div class={`px-6 ${narrow ? 'mx-auto max-w-5xl' : ''}`}>
+  <hr style="border: none; border-top: 1px solid var(--color-border);" />
+</div>

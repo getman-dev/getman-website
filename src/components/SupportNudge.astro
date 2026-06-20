@@ -1,0 +1,69 @@
+---
+import { githubStarsUrl, buyMeACoffeeUrl } from '../config';
+
+let stars = 0;
+try {
+  const res = await fetch('https://api.github.com/repos/getman-dev/getman-ui', {
+    headers: { Accept: 'application/vnd.github+json' },
+  });
+  if (res.ok) {
+    const data = await res.json();
+    stars = data.stargazers_count ?? 0;
+  }
+} catch { /* fall through */ }
+
+const starsFormatted = stars > 0
+  ? (stars >= 1000 ? `${(stars / 1000).toFixed(1)}k` : String(stars))
+  : null;
+---
+
+<section class="px-6 py-20 text-center">
+  <div class="mx-auto max-w-2xl">
+
+    {starsFormatted && (
+      <div class="mb-4 flex items-baseline justify-center gap-2">
+        <span class="text-6xl font-extrabold tabular-nums leading-none" style="color: var(--color-accent);">
+          {starsFormatted}
+        </span>
+        <span class="text-lg font-medium" style="color: var(--color-text-muted);">stars on GitHub</span>
+      </div>
+    )}
+
+    <p class="mb-2 text-xl font-bold" style="color: var(--color-text-primary);">
+      {starsFormatted ? 'Join the developers who already love GetMan.' : 'Like what you see?'}
+    </p>
+    <p class="mb-8 text-base leading-relaxed" style="color: var(--color-text-secondary);">
+      GetMan is free and MIT licensed — forever. If it saves you time,<br class="hidden sm:block" />
+      a star or a coffee keeps the work going.
+    </p>
+
+    <div class="flex flex-wrap items-center justify-center gap-4">
+      <a
+        href={githubStarsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-white transition-transform"
+        style="background-color: var(--color-accent); box-shadow: 3px 3px 0 var(--color-accent-shadow);"
+        onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0 var(--color-accent-shadow)'"
+        onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0 var(--color-accent-shadow)'"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+        Add your star
+      </a>
+      <a
+        href={buyMeACoffeeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-xl border-2 px-6 py-3 text-sm font-bold transition-transform"
+        style="border-color: var(--color-border); background: var(--color-surface); color: var(--color-text-secondary); box-shadow: 3px 3px 0 var(--color-border);"
+        onmouseover="this.style.transform='translate(-1px,-1px)';this.style.boxShadow='4px 4px 0 var(--color-border)'"
+        onmouseout="this.style.transform='';this.style.boxShadow='3px 3px 0 var(--color-border)'"
+      >
+        ☕ Buy me a coffee
+      </a>
+    </div>
+
+  </div>
+</section>
